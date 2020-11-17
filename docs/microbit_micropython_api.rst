@@ -1,8 +1,12 @@
 micro:bit Micropython API
 *************************
 
-.. warning::
-    As we work towards a 1.0 release, this API is subject to frequent changes. This page reflects the current micro:bit API in a developer-friendly (but not necessarily kid-friendly) way.
+.. note::
+
+    The BBC micro:bit MicroPython documentation contains information for all 
+    versions of the micro:bit board. Where functionality is applicable only
+    to the latest device, you will see a note or comment marking this as 
+    **V2**.
 
 The microbit module
 ===================
@@ -72,10 +76,35 @@ The LED display is exposed via the `display` object::
     # written messages).
     display.scroll(string, delay=400)
 
+Microphone **V2**
+----------
+
+This Microphone is accessed via the `microphone` object::
+
+    # Value to represent loud sound events, like clapping or shouting.
+    LOUD = "loud"
+    # Value to represent quiet sound events, like speaking or background music.
+    QUIET = "quiet"
+    # The name of the last recorded sound event, `loud` or `quiet`.
+    current_sound()
+    # A sound event,  such as `microphone.LOUD` or `microphone.QUIET`. 
+    # Returns`true` if sound was heard at least once since the last
+    # call, otherwise `false`.
+    was_sound(event)
+    # A tuple of the event history. The most recent is listed last.
+    # Also clears the sound event history before returning.
+    get_sounds()
+    # The threshold level in the range 0-255. For example,
+    # `set_threshold(microphone.LOUD, 250)` will only trigger if the
+    # sound is very loud (>= 250).
+    set_threshold()
+    # A representation of the sound pressure level in the range 0 to 255.
+    sound_level()
+
 Pins
 ----
 
-Provide digital and analog input and output functionality, for the pins in the connector. Some pins are connected internally to the I/O that drives the LED matrix and the buttons.
+Provide digital and analog input and output functionality, for the pins in the connector, the **V2** logo and the **V2** speaker. Some pins are connected internally to the I/O that drives the LED matrix and the buttons.
 
 Each pin is provided as an object directly in the ``microbit`` module.  This keeps the API relatively flat, making it very easy to use:
 
@@ -87,6 +116,8 @@ Each pin is provided as an object directly in the ``microbit`` module.  This kee
     * *Warning: P17-P18 (inclusive) are unavailable.*
     * pin19
     * pin20
+    * pin_audio **V2**
+    * pin_speaker **V2**
 
 Each of these pins are instances of the ``MicroBitPin`` class, which offers the following API::
 
